@@ -1,0 +1,43 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>newProduit</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+<form [formGroup]="produitForm">
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Nom</ion-label>
+      <ion-input type="text" formControlName="name"></ion-input>
+    </ion-item>
+      <ion-item>
+        <ion-label floating>Date</ion-label>
+        <ion-datetime displayFormat="D/MM/YYYY" formControlName="date"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+      <ion-label floating>Description</ion-label>
+      <ion-textarea type="text" formControlName="description"></ion-textarea>
+    </ion-item>
+  </ion-list>
+ 
+  <div text-center>
+    <button ion-button round large icon-only (click)="onTakePhoto('camera')">
+      <ion-icon name="camera"></ion-icon>
+    </button>
+    <button ion-button round large icon-only (click)="onTakePhoto('librery')">
+      <ion-icon name="image"></ion-icon>
+    </button>
+  </div>
+  <ion-item *ngIf="imageUrl">
+    <div class="flex">
+      <div class="img-box">
+        <img [src]="imageUrl">
+      </div>
+    </div>
+  </ion-item>
+  <button ion-button full (click)="onSubmitForm()" [disabled]="produitForm.invalid">Enregistrer</button>
+</form>
+</ion-content>

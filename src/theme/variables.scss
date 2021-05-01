@@ -34,11 +34,12 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #488aff,
+  primary:    #E8B200,
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      #f4f4f4,
-  dark:       #222
+  dark:       #222,
+  lightdark: #363636,
 );
 
 
@@ -52,7 +53,8 @@ $colors: (
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
-
+$searchbar-md-input-background-color:color($colors,lightdark);
+$searchbar-md-input-text-color:color($colors,lightdark);
 
 
 
@@ -70,7 +72,7 @@ $colors: (
 // so that the above variables are used and Ionic's
 // default are overridden.
 
-@import "ionic.theme.default";
+@import "ionic.theme.dark";
 
 
 // Ionicons
