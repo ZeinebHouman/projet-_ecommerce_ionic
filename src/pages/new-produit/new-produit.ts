@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { AlertController, IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { normalizeUrl } from 'ionic-angular/navigation/deep-linker';
+import { Subscription } from 'rxjs';
 import { Produit } from '../../models/produit.model';
+import { User } from '../../models/user.model';
 import { ProduiService } from '../../services/produit.service';
+import { UserService } from '../../services/user.service';
 
 
 
@@ -16,14 +19,24 @@ import { ProduiService } from '../../services/produit.service';
 export class NewProduitPage implements OnInit{
   produitForm: FormGroup;
   imageUrl: string;
+  userSubscription: Subscription;
+  user: User;
 
   constructor(private formBuilder: FormBuilder, private camera: Camera,
     private toastCtrl: ToastController,
     private produitService: ProduiService,
-    private navCnrtl: NavController
+    private navCnrtl: NavController,
+    private authService: UserService, 
+    private alertCtrl :AlertController
+
+    
     ) {
   }
   ngOnInit(): void {
+    this.userSubscription=this.authService.user$.subscribe(
+      (user: User)=>{
+        this.user=user;
+      });
    this.initForm();
   }
   initForm()
@@ -32,7 +45,8 @@ export class NewProduitPage implements OnInit{
       {
         name: ['',Validators.required],
         date: [new Date().toISOString, Validators.required],
-        description: ['',Validators]
+        description: ['',Validators],
+        prix: ['',Validators.required]
       }
     )
   }
@@ -88,12 +102,34 @@ export class NewProduitPage implements OnInit{
   onSubmitForm() //ajouter un produit dans le service
   {
     let newProduit=new Produit(
+      null,
       this.produitForm.get('name').value,
+      this.produitForm.get('prix').value,
       this.produitForm.get('description').value,
       new Date,
-      this.imageUrl);
-      this.produitService.addProduits(newProduit);
+      this.imageUrl,
+      this.authService.users[1]);
+      this.produitService.addProduits(newProduit).then(
+        (resolve) =>{ 
+          const alert = this.alertCtrl.create({
+            title: 'Succés',
+            subTitle: 'Votre produit a été bien ajoutée !',
+            buttons: ["OK"]
+        }
+      );
+      alert.present();
       this.navCnrtl.pop();
+    },(reject)=>{
+      const alert = this.alertCtrl.create({
+        title: 'Erreur',
+        subTitle: 'Une erreur est survenue lors de l\'ajout du produit '+reject,
+        buttons: ['OK']
+      });
+      alert.present();
+    });
+
+
+     
 
 
   }

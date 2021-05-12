@@ -15,6 +15,11 @@ import { ProduiService } from '../services/produit.service';
 import { NewProduitPage } from '../pages/new-produit/new-produit';
 import { Camera } from '@ionic-native/camera';
 import { AuthentificationPage } from '../pages/authentification/authentification';
+import { UserService } from '../services/user.service';
+import { SingleProduitPage } from '../pages/single-produit/single-produit';
+import { sqliteService } from '../services/sqlite.service';
+import { SQLite } from '@ionic-native/sqlite';
+;
 
 @NgModule({
   declarations: [
@@ -25,7 +30,8 @@ import { AuthentificationPage } from '../pages/authentification/authentification
     SettingsPage,
     ProfilPage,
     NewProduitPage,
-    AuthentificationPage
+    AuthentificationPage,
+    SingleProduitPage
   ],
   imports: [
     BrowserModule,
@@ -43,20 +49,22 @@ import { AuthentificationPage } from '../pages/authentification/authentification
     SettingsPage,
     ProfilPage,
     NewProduitPage,
-    AuthentificationPage
+    AuthentificationPage,
+    SingleProduitPage,
+    
+    
     
   ],
   providers: [
   
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
     ProduiService, 
-    Camera
-   
-   
-  
-
+    Camera,
+    UserService,
+    sqliteService,
+    SQLite,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
 
   ]
 })

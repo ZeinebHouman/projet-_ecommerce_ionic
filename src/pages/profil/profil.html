@@ -1,24 +1,81 @@
 <ion-header>
   <ion-navbar color="primary">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
    <ion-buttons left>
      <button ion-button icon-only (click)="onToggleMenu()">
        <ion-icon name="menu"></ion-icon>
      </button>
    </ion-buttons>
+  </ion-col>
+  <ion-col>
    <ion-buttons right>
      <button ion-button icon-only [navPush]="newProduit">
        <ion-icon name="add"></ion-icon>
      </button>
    </ion-buttons>
-    <ion-title>profil</ion-title>
+  </ion-col>
+  </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <img src="https://wir.skyrock.net/wir/v1/profilcrop/?c=mog&w=301&h=301&im=%2Fart%2FPRIP.81408082.37.1.jpg" class="center im" />
+      </ion-col>   
+    </ion-row>
+    <ion-row>
+      <h4 class="center">user.firstName</h4>
+    </ion-row>
+  </ion-grid>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-card *ngFor="let p of produitList" >
-    <img [src]="p.imagePath">
-    <ion-title>{{p.name}}</ion-title>
+  <ion-list>
+    <ion-item *ngFor="let p of produitList">
+      <ion-thumbnail item-start>
+        <img [src]="p.imagePath">
+      </ion-thumbnail>
+      <h2>{{p.name}}</h2>
+      <h6>{{p.prix}} Dt</h6>
+      <p>{{p.description}}</p>
+      <button ion-button clear item-end (click)="onLoadProduit(p)">Savoir plus</button>
+    </ion-item>
+  </ion-list>
+  
+  <!--<ion-card *ngFor="let p of produitList" (click)="onLoadProduit(p)" >
+    <ion-item>
+      <ion-avatar item-start>
+        <img [src]="">
+      </ion-avatar>
+     
 
-  </ion-card>
+      <h2  color="light">Zeineb Houman</h2>
+      <p>November 5 , 2020</p>
+    </ion-item>
  
+    <img [src]="p.imagePath">
+ 
+    <ion-title>{{p.name}}</ion-title>
+  <ion-card-content>
+  <p  color="light">{{p.description}}</p>
+  </ion-card-content>
+  <ion-row>
+    <ion-col>
+      <button ion-button icon-start clear small>
+        <ion-icon name="thumbs-up"></ion-icon>
+        <div>12 Likes</div>
+      </button>
+    </ion-col>
+    <ion-col>
+      <button ion-button icon-start clear small>
+        <ion-icon name="text"></ion-icon>
+        <div>4 Comments</div>
+      </button>
+    </ion-col>
+   <button  ion-fab mini icon-start clear  small>
+        <ion-icon name="ios-more"></ion-icon>
+      </button>
+    </ion-col>
+  </ion-row>
+ </ion-card>-->
 </ion-content>
