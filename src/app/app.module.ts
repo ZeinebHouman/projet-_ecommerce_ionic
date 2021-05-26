@@ -19,6 +19,7 @@ import { UserService } from '../services/user.service';
 import { SingleProduitPage } from '../pages/single-produit/single-produit';
 import { sqliteService } from '../services/sqlite.service';
 import { SQLite } from '@ionic-native/sqlite';
+import { UpdateProduitPage } from '../pages/update-produit/update-produit';
 ;
 
 @NgModule({
@@ -31,7 +32,8 @@ import { SQLite } from '@ionic-native/sqlite';
     ProfilPage,
     NewProduitPage,
     AuthentificationPage,
-    SingleProduitPage
+    SingleProduitPage,
+    UpdateProduitPage
   ],
   imports: [
     BrowserModule,
@@ -51,6 +53,7 @@ import { SQLite } from '@ionic-native/sqlite';
     NewProduitPage,
     AuthentificationPage,
     SingleProduitPage,
+    UpdateProduitPage
     
     
     

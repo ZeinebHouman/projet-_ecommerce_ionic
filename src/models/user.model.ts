@@ -1,10 +1,11 @@
 export class User{
     constructor(
-        public id: String,
+        public id: number,
         public firstName: String,
         public lastName:String,
         public email:String,
         public password: String,
         public photo: String,
+        public tel : String
         ){}
 }

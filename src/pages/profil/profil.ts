@@ -16,21 +16,28 @@ import { SingleProduitPage } from '../single-produit/single-produit';
   selector: 'page-profil',
   templateUrl: 'profil.html',
 })
-export class ProfilPage implements OnInit{
+export class ProfilPage   {
 
   user:User;
+  imageUser: String;
   produitList: Produit[];
   newProduit=NewProduitPage;
   userSubscription: Subscription
   produitListSubscription: Subscription; // pour souscrire du subject de service
-  constructor( private navCntrl: NavController, private userServise: UserService ,private produitService: ProduiService,private menuCntrl: MenuController, public navParams: NavParams)
+  constructor( private navCntrl: NavController, private userService: UserService ,private produitService: ProduiService,private menuCntrl: MenuController, public navParams: NavParams)
   {
+    this.userSubscription=this.userService.user$.subscribe(
+      (user: User)=>{
+        this.user=user;
 
-  }
+  })
+  this.userService.emitUser();
+}
+
+
   
-  ngOnInit()
-  {
-    this.userSubscription=this.userServise.user$.subscribe(
+  //ionViewWillEnter(){
+   /* this.userSubscription=this.userServise.user$.subscribe(
       (user: User)=>{
         this.user=user;
       });
@@ -42,8 +49,18 @@ export class ProfilPage implements OnInit{
       (produits: Produit[]) =>{ this.produitList= produits}
     );
     this.produitService.emitProduit();*/
-  }
-  
+ // }
+ ionViewWillEnter()
+ {
+  setTimeout(()=> {
+    this.produitService.displayProduitProfil(this.user).then(
+      (produits : Produit[]) =>{ 
+        this.produitList=produits;
+   }
+ )},2000)
+ 
+ }
+ 
   onToggleMenu()
   {
     

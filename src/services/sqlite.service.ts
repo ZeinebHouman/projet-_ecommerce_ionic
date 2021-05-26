@@ -14,7 +14,7 @@ export class sqliteService{
         private platform:Platform)
         {
             let loader= this.loadingCtrl.create({
-                content: 'Chargement...'
+                content: 'Loading...'
               });
 
             loader.present();
@@ -47,12 +47,7 @@ private createDataBaseFile()
         })
         .catch((error)=>
         {
-            let toast= this.toastCtrl.create({
-                message:error.message,
-                duration:3000,
-                position:'top'
-                     });
-                toast.present();
+           
         }        
         )
      
@@ -60,74 +55,55 @@ private createDataBaseFile()
    
     
     createProduitsUsers() {
-       //Creation de table produit
-       this.db.executeSql('create table IF NOT EXISTS PRODUIT (ID_PRODUIT int not null, ID int not null, NAME char(30) not  null, PRIX decimal not null ,DESCRIPTION  varchar(100)  not null, IMAGEPATH  long blob not null,primary key (ID_PRODUIT))',{})
-       .then(()=>{
-           ////Creation de table produit
-        this.db.executeSql('create table IF NOT EXISTS USER (ID int not null,FIRSTNAME char(20)  not null,LASTNAME  char(20) not null,EMAIL char(50) not null,PASSWORD  char(30) not null,primary key (ID))',{})
+        //Creation de table produit 
+        this.db.executeSql('create table IF NOT EXISTS USER (ID int not null,FIRSTNAME char(20)  not null,LASTNAME  char(20) not null,EMAIL char(50) not null,PASSWORD  char(30) not null, TEL char(20) not null ,primary key (ID))',{})
         .then(()=>{
-            this.db.executeSql('alter table PRODUIT add constraint FK_AVOIR foreign key (ID) references USER (ID) on delete restrict on update restrict ',{})
-            .then(()=>{
-                let toast= this.toastCtrl.create({
-                    message: "tables created",
-                    duration:3000,
-                    position:'top'
-                         });
-                    toast.present();
-              
-                })
-            .catch((error)=>{
-                let toast= this.toastCtrl.create({
-                    message:"erreur alter " + error.message,
-                    duration:3000,
-                    position:'top'
-                         });
-                    toast.present();
-            })
-
-            })
-        .catch((error)=>    {
-          let toast= this.toastCtrl.create({
-                message:"erreur creation user" ,
-                duration:3000,
-                position:'top'
-                     });
-                toast.present();
+            ////Creation de table produit
+         this.db.executeSql('create table IF NOT EXISTS PRODUIT (ID_PRODUIT int not null, ID int not null, NAME char(30) not  null, PRIX decimal not null ,DESCRIPTION  varchar(100)  not null, IMAGEPATH  long blob not null, primary key (ID_PRODUIT), foreign key(ID) references USER (ID))',{})
+         .then(()=>{
+     
+                /* let toast= this.toastCtrl.create({
+                     message: "tables created",
+                     duration:3000,
+                     position:'top'
+                          });
+                     toast.present();
+                    // alert("tables created");*/
          
-        });
-    })
-    .catch((error)=>    {
-        let toast= this.toastCtrl.create({
-            message:"erreur creation produit",
-            duration:3000,
-            position:'top'
-                 });
-            toast.present();
-    
-    });
-    }
+ 
+             })
+         .catch((error)=>    {
+              alert(error.message)
+          
+         });
+     })
+     .catch((error)=>    {
+       
+     
+     });
+     }
 
 
     insertUsers() {
-        this.db.executeSql('INSERT INTO USER VALUES (1,\''+'Houman'+'\',\''+'Zeineb'+'\',\''+'zeineb@gmail.com'+'\',\''+'123'+'\')',{})
+        this.db.executeSql('INSERT INTO USER VALUES (1,\''+'Houman'+'\',\''+'Zeineb'+'\',\''+'zeineb@gmail.com'+'\',\''+'123'+'\',\''+'25879654'+'\')',{})
         .then(()=>{
-            let toast= this.toastCtrl.create({
+         /*   let toast= this.toastCtrl.create({
                 message: "user 1 inserted !!",
                 duration:3000,
                 position:'top'
                      });
-                toast.present();
+                toast.present();*/
         
     })
     .catch((error)=>{
-        let toast= this.toastCtrl.create({
+      /*  let toast= this.toastCtrl.create({
             message:"erreur insertion user 1 "+ error.message,
             duration:3000,
             position:'top'
                  });
-            toast.present();
+            toast.present();*/
     });
-    this.db.executeSql('INSERT INTO USER VALUES (2,\''+'zzz'+'\',\''+'Nour'+'\',\''+'nour@gmail.com'+'\',\''+'123'+'\')',{})
+    this.db.executeSql('INSERT INTO USER VALUES (2,\''+'Houman'+'\',\''+'Nour'+'\',\''+'nour@gmail.com'+'\',\''+'123'+'\',\''+'5578945'+'\')',{})
     .then(()=>{
         let toast= this.toastCtrl.create({
             message: "user 2 inserted !!",
@@ -138,12 +114,12 @@ private createDataBaseFile()
     
 })
 .catch((error)=>{
-    let toast= this.toastCtrl.create({
+    /*let toast= this.toastCtrl.create({
         message:"erreur insertion user 2 "+ error.message,
         duration:3000,
         position:'top'
              });
-        toast.present();
+        toast.present();*/
 })
 
 }
